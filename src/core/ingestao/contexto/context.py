@@ -26,6 +26,7 @@ class Context(object):
         formato: Optional[str] = None,
         base_path: Optional[str] = None,
         qualidade: Optional[Dict] = None,
+        schema: Optional[Dict] = None,
         notificacao: Optional[Dict] = None,
     ):
         self.dag_id = dag_id
@@ -47,7 +48,7 @@ class Context(object):
         self.formato = formato
         self.opcoes = opcoes or {}
         self.qualidade = qualidade
-
+        self.schema = schema
     @property
     def observabilidade(self):
         pass

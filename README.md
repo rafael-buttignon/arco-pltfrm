@@ -1,8 +1,11 @@
-# Arco Platform
+# Arco Data Platform
 
-Este repositorio nasce como um esqueleto tecnico para materializar, em codigo, a proposta discutida no case. A ideia e evoluir uma plataforma de dados
-com foco em contratos, qualidade, ownership, observabilidade, governanca leve,
-FinOps e simplicidade operacional. A estrutura de pastas da aplicacao sera criada manualmente conforme a implementacao evoluir.
+<p align="center">
+  <img src="docs/assets/readme/arco-ai-image.png" alt="Imagem arco-ai-image" width="375">
+</p>
+
+
+Este repositorio nasce como um esqueleto tecnico para materializar, em codigo, uma ampla implementação. A ideia e evoluir uma plataforma de dados com foco em contratos, qualidade, ownership, observabilidade, governanca, FinOps e simplicidade operacional.
 
 ## Introducao
 
@@ -34,6 +37,7 @@ para Data Platform:
 - Configuracao reproduzivel para qualquer pessoa rodar localmente.
 - Automacao de qualidade antes de abrir pull requests.
 - Decisoes tecnicas simples, registradas e faceis de revisar.
+- Foco em melhores práticas (SOLID, OOP, Clean Code, Tests, Docstrings, KISS, Design Patterns)
 
 No contexto do case, a implementacao deve caminhar para um pequeno framework de
 plataforma capaz de padronizar a criacao e operacao de pipelines. A intencao e
@@ -73,6 +77,49 @@ Resumo das responsabilidades:
 - `src/utils/integracoes` isola clientes e adaptadores para ferramentas externas.
 - `src/utils/servicos` agrupa servicos transversais como qualidade, metadata, ACL, FinOps e monitoramento.
 - `test` separa suporte de banco, helpers, testes unitarios e testes de integracao.
+
+Padrao para imagens no README:
+
+- Guarde imagens de documentacao em `docs/assets/readme/`.
+- Use nomes curtos, em minusculo e separados por hifen.
+- Referencie sempre por caminho relativo para funcionar no GitHub e localmente.
+
+## Exemplo de Pipeline YAML
+
+Um Dataset pode ser descrito de forma declarativa em YAML. Nesse modelo, o bloco
+`Dag` define o contexto geral da DAG e cada item em `dataset` representa uma
+entidade de origem que sera processada por um conector especifico.
+
+Esqueleto>
+
+```yaml
+Dag:
+  dag_id: ""
+  dag_name: ""
+  escopo: "ingestao"
+  dominio: ""
+  agendamento: " * * * * *"
+  source_system: ""
+  dataset:
+    - name: ""
+      connector: "restapi"
+      source_entity: ""
+      owner_team: ""
+      credencial_id: ""
+      metodo: ""
+      base_url: ""
+      schema: !include ../dataset/...
+      sync: !include ../dataset/...
+      observabilidade: !include ../dataset/...
+      qualidade: !include ../dataset/...
+```
+
+Leitura pela arquitetura:
+
+- `escopo`, `dominio`, `agendamento` e `source_system` alimentam o contexto do pipeline em `src/core/ingestao/contexto`.
+- `connector: "restapi"` direciona a execucao para os conectores em `src/core/ingestao/connectores/api`.
+- `schema`, `sync`, `observabilidade` e `qualidade` se conectam aos servicos em `src/utils/servicos`.
+- `credencial_id`, `metodo`, `base_url` representam parametros tecnicos da integracao externa de cada connector.
 
 ## Quickstart
 
@@ -137,7 +184,6 @@ Sugestao de organizacao:
 - Testes de integracao para adapters, storage, APIs e dependencias externas.
 - Fixtures pequenas, explicitas e proximas do comportamento testado.
 - Dados de teste anonimizados e pequenos.
-- Cobertura como ferramenta de feedback, nao como objetivo isolado.
 
 Para rodar:
 
@@ -156,6 +202,7 @@ make test-cov
 Padroes iniciais adotados:
 
 - Python `3.12+`.
+- Pytest + Unity Test
 - Tipagem explicita em funcoes publicas.
 - Formatacao automatica com `ruff format`.
 - Lint com regras de qualidade, imports, modernizacao e bugs comuns.
@@ -186,6 +233,14 @@ O pre-commit executa validacoes basicas de arquivos e Ruff. A configuracao esta
 em `.pre-commit-config.yaml`.
 
 ## Contribuicao
+
+Este projeto segue o GitHub Flow: toda mudanca nasce em uma branch curta a partir
+da `main`, recebe commits pequenos, passa por pull request e so entra na branch
+principal depois de revisao e validacao.
+
+<p align="center">
+  <img src="docs/assets/readme/github-flow.png" alt="Imagem github flow" width="900">
+</p>
 
 Fluxo sugerido:
 
