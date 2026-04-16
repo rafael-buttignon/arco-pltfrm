@@ -1,11 +1,13 @@
-# Arco Data Platform
+# Arco
 
 <p align="center">
   <img src="docs/assets/readme/arco-ai-image.png" alt="Imagem arco-ai-image" width="375">
 </p>
 
 
-Este repositorio nasce como um esqueleto tecnico para materializar, em codigo, uma ampla implementação. A ideia e evoluir uma plataforma de dados com foco em contratos, qualidade, ownership, observabilidade, governanca, FinOps e simplicidade operacional.
+Este repositório nasce como um esqueleto técnico para materializar, em código, uma visão mais ampla de plataforma de dados. O objetivo é evoluir para uma arquitetura orientada a contratos, com foco em qualidade, ownership bem definido, observabilidade, governança e práticas de FinOps, mantendo a simplicidade operacional como princípio central.
+
+A base de desenvolvimento é fortemente apoiada em boas práticas de engenharia de software, como orientação a objetos, princípios SOLID, KISS, testes automatizados e documentação consistente. Além disso, prioriza-se um pensamento crítico e analítico sobre cada implementação, garantindo decisões técnicas mais sustentáveis, escaláveis e alinhadas ao longo prazo.
 
 ## Introducao
 
