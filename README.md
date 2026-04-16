@@ -58,29 +58,79 @@ clara de uso recomendado.
 
 ## Arquitetura
 
-A estrutura de aplicacao ainda nao foi criada neste esqueleto. Uma organizacao
-sugerida para quando a implementacao comecar:
+A estrutura inicial foi criada para separar o nucleo da plataforma, utilitarios,
+integracoes externas e testes. Os arquivos Python nascem como stubs para evolucao
+incremental da implementacao.
 
 ```text
+.github/
 src/
-  arco_platform/
-    domain/           # Regras de negocio, contratos e entidades
-    application/      # Casos de uso, pipelines e servicos de aplicacao
-    infrastructure/   # Clientes externos, storage, banco, APIs e adapters
-    interfaces/       # CLI, jobs, handlers ou entrypoints
-
-tests/
-  unit/               # Testes rapidos e isolados
-  integration/        # Testes com dependencias externas controladas
+  config/
+  core/
+    ingestao/
+      connectores/
+        api/
+        arquivo/
+        database/
+          cdc/
+        streaming/
+      contexto/
+        api/
+        arquivo/
+        database/
+        streaming/
+      decorator/
+    ml/
+      contexto/
+      decorator/
+    transformacao/
+      contexto/
+      decorator/
+  utils/
+    common/
+    integracoes/
+      airflow/
+      datadog/
+      dbt/
+      e-mail/
+      git/
+      google/
+      slack/
+    servicos/
+      acl/
+      fabrica/
+      finops/
+      metadata/
+      monitor/
+      quality/
+test/
+  db/
+  helper.py/
+  integracao/
+    core/
+      ingestao/
+      ml/
+      transformacao/
+    utils/
+  unitario/
+    core/
+      ingestao/
+      ml/
+      transformacao/
+    utils/
 ```
 
-Diretrizes iniciais:
+Resumo das responsabilidades:
 
-- `domain` nao deve depender de infraestrutura.
-- `application` coordena casos de uso e contratos.
-- `infrastructure` implementa detalhes externos.
-- `interfaces` expõe formas de execucao, como CLI, jobs ou handlers.
-- Configuracoes sensiveis devem vir de variaveis de ambiente, nunca hardcoded.
+- `.github` concentra metadados de colaboracao, como owners e template de pull request.
+- `src/config` guarda configuracoes base do projeto.
+- `src/core` concentra os fluxos principais de ingestao, transformacao e machine learning.
+- `src/core/ingestao/connectores` organiza conectores por tipo de origem ou transporte.
+- `src/core/ingestao/contexto` guarda objetos de contexto para parametrizar execucoes.
+- `src/utils/common` reune utilitarios compartilhados, enums, excecoes e helpers.
+- `src/utils/integracoes` isola clientes e adaptadores para ferramentas externas.
+- `src/utils/servicos` agrupa servicos transversais como qualidade, metadata, ACL, FinOps e monitoramento.
+- `test` separa suporte de banco, helpers, testes unitarios e testes de integracao.
 
 ## Quickstart
 

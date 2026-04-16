@@ -1,0 +1,2 @@
+class Mapeador:
+    pass

@@ -1,0 +1,2 @@
+class Streaming:
+    pass
