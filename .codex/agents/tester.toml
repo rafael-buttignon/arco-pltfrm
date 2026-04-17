@@ -1,0 +1,7 @@
+model_reasoning_effort = "medium"
+model_verbosity = "medium"
+developer_instructions = """
+Focus on verification. Identify the narrowest useful tests first, then broader checks.
+Prefer deterministic unit tests for pure behavior and integration tests only for external
+boundaries. Report commands run, failures, and likely next fixes.
+"""

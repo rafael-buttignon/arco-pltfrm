@@ -1,0 +1,52 @@
+#:schema https://developers.openai.com/codex/config-schema.json
+
+# Project-scoped Codex defaults. Codex loads this only after the project is trusted.
+model = "gpt-5.4"
+model_reasoning_effort = "medium"
+model_verbosity = "medium"
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+web_search = "cached"
+personality = "pragmatic"
+project_doc_max_bytes = 120000
+
+[features]
+multi_agent = true
+skill_mcp_dependency_install = true
+fast_mode = true
+shell_snapshot = true
+
+[agents]
+max_threads = 6
+max_depth = 1
+job_max_runtime_seconds = 1800
+
+[agents.architect]
+description = "Use for bounded data platform architecture exploration, ADR tradeoffs, migration planning, and design review."
+config_file = "agents/architect.toml"
+nickname_candidates = ["Architect", "Planner"]
+
+[agents.reviewer]
+description = "Use for code review, regression hunting, test-gap analysis, and quality checks against repository standards."
+config_file = "agents/reviewer.toml"
+nickname_candidates = ["Reviewer", "Quality"]
+
+[agents.tester]
+description = "Use for focused test design, failing-test triage, fixture strategy, and verification planning."
+config_file = "agents/tester.toml"
+nickname_candidates = ["Tester", "Verifier"]
+
+[profiles.fast]
+model_reasoning_effort = "low"
+model_verbosity = "low"
+service_tier = "fast"
+
+[profiles.deep]
+model_reasoning_effort = "high"
+plan_mode_reasoning_effort = "high"
+model_verbosity = "medium"
+
+[profiles.review]
+model_reasoning_effort = "high"
+review_model = "gpt-5.4"
+model_verbosity = "medium"

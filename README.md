@@ -71,7 +71,15 @@ incremental da implementacao.
 Estrutura atual do projeto:
 
 ```text
+├── 📁 .agents/
+│   └── 📁 skills/                         # skills compartilhadas para uso com Codex
+├── 📁 .codex/
+│   ├── 📁 agents/                         # configuracoes de papeis especializados de subagentes
+│   └── config.toml                        # defaults project-scoped do Codex
 ├── 📁 .github/
+│   ├── 📁 codex/
+│   │   ├── 📁 prompts/                    # prompts reutilizaveis para Codex CLI, app e Action
+│   │   └── 📁 workflows/                  # exemplos nao ativos de workflows com Codex
 │   ├── CODEOWNERS                         # responsáveis por revisão e ownership
 │   └── PULL_REQUEST_TEMPLATE.md           # template padrão para pull requests
 ├── 📁 docs/
@@ -101,6 +109,7 @@ Estrutura atual do projeto:
 │   ├── 📁 integracao/                     # testes de integração por domínio
 │   ├── 📁 unitario/                       # testes unitários por domínio
 │   └── 📁 helper.py/                      # helpers compartilhados de teste
+├── AGENTS.md                              # instrucoes persistentes para agentes Codex
 ├── .gitignore
 ├── .pre-commit-config.yaml                # hooks de qualidade antes do commit
 ├── .python-version                        # versão Python do projeto
@@ -112,7 +121,11 @@ Estrutura atual do projeto:
 
 Resumo das responsabilidades:
 
+- `AGENTS.md` define as instrucoes persistentes que o Codex deve carregar ao trabalhar no repositorio.
+- `.codex` guarda configuracao project-scoped, perfis e papeis especializados de subagentes.
+- `.agents/skills` guarda skills compartilhadas do time para workflows repetiveis.
 - `.github` concentra metadados de colaboracao, como owners e template de pull request.
+- `.github/codex/prompts` guarda prompts versionados para execucao manual, CLI ou GitHub Action.
 - `src/config` guarda configuracoes base do projeto.
 - `src/core` concentra os fluxos principais de ingestao, transformacao e machine learning.
 - `src/core/ingestao/connectores` organiza conectores por tipo de origem ou transporte.
@@ -217,6 +230,38 @@ make pre-commit-install   # Instala hooks de pre-commit
 make pre-commit-run       # Executa hooks em todos os arquivos
 make clean                # Remove caches locais
 ```
+
+## Desenvolvimento com Codex
+
+Este repositorio esta preparado para usar Codex como agente de desenvolvimento de forma consistente.
+
+Arquivos principais:
+
+- `AGENTS.md`: instrucoes duraveis do projeto, carregadas automaticamente pelo Codex.
+- `.codex/config.toml`: configuracao project-scoped com modelo, sandbox, perfis e subagentes.
+- `.codex/agents/`: configuracoes especificas para papeis como arquitetura, revisao e testes.
+- `.agents/skills/`: skills compartilhadas, incluindo arquitetura de data platform e documentacao de estrutura.
+- `.github/codex/prompts/`: prompts reutilizaveis para implementacao, revisao, ADRs e retrospectivas de skills.
+- `.github/codex/workflows/pr-review.example.yml`: exemplo nao ativo para habilitar Codex GitHub Action depois de configurar `OPENAI_API_KEY`.
+
+Fluxo recomendado:
+
+1. Comece tarefas grandes com `/plan`.
+2. Use prompts versionados quando a tarefa for recorrente.
+3. Use `$data-platform-architecture` para decisoes de arquitetura, ADRs, governanca, qualidade, observabilidade e roadmap.
+4. Use `$document-project-structure` ao atualizar a arvore e responsabilidades do README.
+5. Use `$skill-creator` quando um workflow se repetir e merecer virar skill.
+6. Use `$openai-docs` para duvidas sobre Codex, OpenAI API, modelos, Responses API, Agents SDK ou upgrades.
+7. Rode `make check` antes de finalizar mudancas relevantes.
+8. Use `/diff` e `/review` antes de aceitar ou abrir PR.
+
+Configuracao local recomendada no Codex:
+
+- Confie o projeto para que `.codex/config.toml` seja carregado.
+- Mantenha permissoes em `workspace-write` e aprovacoes em `on-request` para equilibrar velocidade e seguranca.
+- Use o perfil `deep` para tarefas longas ou ambigueas.
+- Use o perfil `fast` para edicoes pequenas e bem delimitadas.
+- Transforme correcoes recorrentes em ajustes no `AGENTS.md`, prompts ou skills.
 
 ## Testes
 

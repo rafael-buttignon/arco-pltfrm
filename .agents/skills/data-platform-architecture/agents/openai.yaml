@@ -1,0 +1,4 @@
+interface:
+  display_name: "Data Platform Architecture"
+  short_description: "Design and review data platform architectures"
+  default_prompt: "Use $data-platform-architecture to design or review a data platform architecture with clear tradeoffs and implementation steps."

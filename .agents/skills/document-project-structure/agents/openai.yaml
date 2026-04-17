@@ -1,0 +1,4 @@
+interface:
+  display_name: "Document Project Structure"
+  short_description: "Document repository structure in README files"
+  default_prompt: "Use this skill to inspect a repository and update its README with an accurate project structure section."
