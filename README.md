@@ -68,6 +68,48 @@ A estrutura inicial foi criada para separar o nucleo da plataforma, utilitarios,
 integracoes externas e testes. Os arquivos Python nascem como stubs para evolucao
 incremental da implementacao.
 
+Estrutura atual do projeto:
+
+```text
+├── 📁 .github/
+│   ├── CODEOWNERS                         # responsáveis por revisão e ownership
+│   └── PULL_REQUEST_TEMPLATE.md           # template padrão para pull requests
+├── 📁 docs/
+│   └── 📁 assets/readme/
+│       ├── arco-ai-image.png              # imagem principal do README
+│       └── github-flow.png                # diagrama do fluxo de contribuição
+├── 📁 src/
+│   ├── 📁 config/
+│   │   ├── __init__.py
+│   │   └── config.ini                     # configurações base do projeto
+│   ├── 📁 core/
+│   │   ├── 📁 ingestao/                   # workflows, conectores e contexto de ingestão
+│   │   │   ├── connectores/               # conectores de API, arquivos, bancos e streaming
+│   │   │   ├── contexto/                  # contextos de execução por tipo de origem
+│   │   │   ├── decorator/                 # decoradores e métricas de ingestão
+│   │   │   ├── workflow.py                # fluxo principal de ingestão
+│   │   │   └── workflow_entrypoint.py     # ponto de entrada do workflow de ingestão
+│   │   ├── 📁 ml/                         # workflow, contexto e decoradores de machine learning
+│   │   └── 📁 transformacao/              # workflow, contexto e decoradores de transformação
+│   ├── 📁 utils/
+│   │   ├── 📁 common/                     # helpers, enums, exceções, paths, flags e logs
+│   │   ├── 📁 integracoes/                # adaptadores externos: Airflow, Datadog, dbt, Git, Google e Slack
+│   │   └── 📁 servicos/                   # serviços transversais: ACL, fábrica, FinOps, metadata, monitor e quality
+│   └── __init__.py
+├── 📁 test/
+│   ├── 📁 db/                             # suporte local de banco para testes
+│   ├── 📁 integracao/                     # testes de integração por domínio
+│   ├── 📁 unitario/                       # testes unitários por domínio
+│   └── 📁 helper.py/                      # helpers compartilhados de teste
+├── .gitignore
+├── .pre-commit-config.yaml                # hooks de qualidade antes do commit
+├── .python-version                        # versão Python do projeto
+├── CHANGELOG.md                           # histórico de mudanças relevantes
+├── Makefile                               # comandos padronizados de desenvolvimento
+├── pyproject.toml                         # dependências e configuração das ferramentas Python
+└── README.md
+```
+
 Resumo das responsabilidades:
 
 - `.github` concentra metadados de colaboracao, como owners e template de pull request.
